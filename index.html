@@ -3,122 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sơ đồ ruộng cây thông minh</title>
+  <title>Dashboard IFrame ERA</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f8f4;
+      background: #f5fdf6;
       margin: 0;
-      padding: 0;
+      padding: 2rem;
     }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 1rem;
-    }
-    h2 {
-      font-size: 20px;
-      color: #2e7d32;
-      margin-bottom: 1rem;
-    }
-    .field-layout {
+    .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      background: #ffffff;
-      padding: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .section {
+      background: #e9fbe8;
+      border: 2px dashed #43a047;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 1rem 1.5rem;
     }
-    .plant-bed {
-      background: #e8f5e9;
-      border: 2px dashed #66bb6a;
-      border-radius: 10px;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .plant-bed h3 {
-      margin: 0;
-      font-size: 16px;
-      color: #1b5e20;
+    .section h3 {
+      margin-top: 0;
+      color: #2e7d32;
     }
     .sensor {
-      font-size: 14px;
-      background: #f1f8e9;
-      padding: 0.5rem;
-      border-radius: 6px;
+      padding: 0.4rem 0;
+      font-size: 15px;
     }
-    .pump-button {
-      background: #43a047;
+    .sensor span {
+      font-weight: bold;
+    }
+    .btn {
+      background: #4caf50;
       color: white;
       border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      margin-top: 0.5rem;
+      border-radius: 6px;
+      padding: 0.6rem 1.2rem;
+      margin: 0.3rem 0;
+      width: 100%;
+      font-size: 15px;
       cursor: pointer;
-      font-size: 14px;
     }
-    .legend {
-      margin-top: 2rem;
-      font-size: 14px;
-      background: #fff3e0;
-      padding: 1rem;
-      border-radius: 10px;
+    .btn:hover {
+      background: #388e3c;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>🌾 Sơ đồ theo dõi cảm biến và điều khiển (1 luống = 2 node ĐK + 2 node CB)</h2>
-    <div class="field-layout">
-      <div class="plant-bed">
-        <h3>Node Điều Khiển 1 (Bơm)</h3>
-        <button class="pump-button" onclick="togglePump('water')">🚿 Bơm nước</button>
-        <button class="pump-button" onclick="togglePump('sol1')">🧴 Dung dịch A</button>
-        <button class="pump-button" onclick="togglePump('sol2')">🧴 Dung dịch B</button>
-        <button class="pump-button" onclick="togglePump('acid')">🧪 Bơm HNO3</button>
-      </div>
-
-      <div class="plant-bed">
-        <h3>Node Cảm Biến 1 (Đầu luống)</h3>
-        <div class="sensor">🌡️ Nhiệt độ (DHT11): <span id="temp1">--</span> °C</div>
-        <div class="sensor">💧 Độ ẩm không khí: <span id="humid1">--</span> %</div>
-        <div class="sensor">🌾 Độ ẩm đất: <span id="soil1">--</span> %</div>
-        <div class="sensor">☀️ Ánh sáng: <span id="light1">--</span></div>
-        <div class="sensor">⚡ Điện áp: <span id="volt1">--</span> V</div>
-        <div class="sensor">🔌 Dòng điện: <span id="amp1">--</span> A</div>
-        <div class="sensor">🧪 pH: <span id="ph">--</span></div>
-        <div class="sensor">⚙️ EC: <span id="ec">--</span></div>
-      </div>
-
-      <div class="plant-bed">
-        <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
-        <button class="pump-button" onclick="togglePump('light1')">💡 Bóng đèn 1</button>
-        <button class="pump-button" onclick="togglePump('light2')">💡 Bóng đèn 2</button>
-      </div>
-
-      <div class="plant-bed">
-        <h3>Node Cảm Biến 2 (Cuối luống)</h3>
-        <div class="sensor">🌡️ Nhiệt độ (SHT20): <span id="temp2">--</span> °C</div>
-        <div class="sensor">💧 Độ ẩm không khí: <span id="humid2">--</span> %</div>
-        <div class="sensor">🌾 Độ ẩm đất: <span id="soil2">--</span> %</div>
-        <div class="sensor">☀️ Ánh sáng: <span id="light2">--</span></div>
-        <div class="sensor">⚡ Điện áp: <span id="volt2">--</span> V</div>
-        <div class="sensor">🔌 Dòng điện: <span id="amp2">--</span> A</div>
-      </div>
+  <div class="grid">
+    <div class="section">
+      <h3>Node Điều Khiển 1 (Bơm)</h3>
+      <button class="btn" onclick="sendCmd('NODE 1 - Relay 1', 'ON', 1)">🧯 Bơm nước</button>
+      <button class="btn" onclick="sendCmd('NODE 1 - Relay 2', 'ON', 1)">🧪 Dung dịch A</button>
+      <button class="btn" onclick="sendCmd('NODE 1 - Relay 3', 'ON', 1)">🧪 Dung dịch B</button>
+      <button class="btn" onclick="sendCmd('NODE 1 - Relay 4', 'ON', 1)">🧪 Bơm HNO3</button>
     </div>
 
-    <div class="legend">
-      📌 Mỗi luống sẽ có 2 node điều khiển (bơm + đèn) và 2 node cảm biến (đầu & cuối). Bạn có thể gắn data thực vào các ID, hoặc dùng API/iframe trong ERA để cập nhật.
+    <div class="section">
+      <h3>Node Cảm Biến 1 (Đầu luống)</h3>
+      <div class="sensor">🌡️ Nhiệt độ (DHT11): <span data-era-key="V4">--</span> °C</div>
+      <div class="sensor">💧 Độ ẩm không khí: <span data-era-key="V5">--</span> %</div>
+      <div class="sensor">🌱 Độ ẩm đất: <span data-era-key="V6">--</span> %</div>
+      <div class="sensor">🌞 Ánh sáng: <span data-era-key="V3">--</span></div>
+      <div class="sensor">⚡ Điện áp: <span data-era-key="V1">--</span> V</div>
+      <div class="sensor">🔌 Dòng điện: <span data-era-key="V2">--</span> A</div>
+      <div class="sensor">🧪 pH: <span data-era-key="V8">--</span></div>
+      <div class="sensor">⚙️ EC: <span data-era-key="V7">--</span></div>
+    </div>
+
+    <div class="section">
+      <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
+      <button class="btn" onclick="sendCmd('NODE 2 - Relay 1', 'ON', 1)">💡 Bóng đèn 1</button>
+      <button class="btn" onclick="sendCmd('NODE 2 - Relay 2', 'ON', 1)">💡 Bóng đèn 2</button>
+      <button class="btn" onclick="sendCmd('NODE 2 - Relay 3', 'ON', 1)">💡 Bóng đèn 3</button>
+    </div>
+
+    <div class="section">
+      <h3>Node Cảm Biến 2 (Cuối luống)</h3>
+      <div class="sensor">🌡️ Nhiệt độ (SHT20): <span data-era-key="V12">--</span> °C</div>
+      <div class="sensor">💧 Độ ẩm không khí: <span data-era-key="V13">--</span> %</div>
+      <div class="sensor">🌱 Độ ẩm đất: <span data-era-key="V14">--</span> %</div>
+      <div class="sensor">🌞 Ánh sáng: <span data-era-key="V11">--</span></div>
+      <div class="sensor">⚡ Điện áp: <span data-era-key="V9">--</span> V</div>
+      <div class="sensor">🔌 Dòng điện: <span data-era-key="V10">--</span> A</div>
     </div>
   </div>
 
   <script>
-    function togglePump(pumpId) {
-      alert("Gửi lệnh điều khiển: " + pumpId);
+    function sendCmd(device, action, value) {
+      window.parent.postMessage({
+        type: 'action',
+        payload: {
+          device,
+          action,
+          value
+        }
+      }, '*');
     }
+
+    window.addEventListener("message", (event) => {
+      const { type, payload } = event.data;
+      if (type === "data") {
+        for (let key in payload) {
+          const el = document.querySelector(`[data-era-key='${key}']`);
+          if (el) el.textContent = payload[key];
+        }
+      }
+    });
   </script>
 </body>
 </html>
