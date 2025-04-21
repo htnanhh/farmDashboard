@@ -53,63 +53,83 @@
   <div class="grid">
     <div class="section">
       <h3>Node Điều Khiển 1 (Bơm)</h3>
-      <button class="btn" onclick="sendCmd('NODE 1 - Relay 1', 'ON', 1)">🧯 Bơm nước</button>
-      <button class="btn" onclick="sendCmd('NODE 1 - Relay 2', 'ON', 1)">🧪 Dung dịch A</button>
-      <button class="btn" onclick="sendCmd('NODE 1 - Relay 3', 'ON', 1)">🧪 Dung dịch B</button>
-      <button class="btn" onclick="sendCmd('NODE 1 - Relay 4', 'ON', 1)">🧪 Bơm HNO3</button>
+      <button class="btn" id="pump1">🧯 Bơm nước</button>
+      <button class="btn" id="pump2">🧪 Dung dịch A</button>
+      <button class="btn" id="pump3">🧪 Dung dịch B</button>
+      <button class="btn" id="pump4">🧪 Bơm HNO3</button>
     </div>
 
     <div class="section">
       <h3>Node Cảm Biến 1 (Đầu luống)</h3>
-      <div class="sensor">🌡️ Nhiệt độ (DHT11): <span data-era-key="V4">--</span> °C</div>
-      <div class="sensor">💧 Độ ẩm không khí: <span data-era-key="V5">--</span> %</div>
-      <div class="sensor">🌱 Độ ẩm đất: <span data-era-key="V6">--</span> %</div>
-      <div class="sensor">🌞 Ánh sáng: <span data-era-key="V3">--</span></div>
-      <div class="sensor">⚡ Điện áp: <span data-era-key="V1">--</span> V</div>
-      <div class="sensor">🔌 Dòng điện: <span data-era-key="V2">--</span> A</div>
-      <div class="sensor">🧪 pH: <span data-era-key="V8">--</span></div>
-      <div class="sensor">⚙️ EC: <span data-era-key="V7">--</span></div>
+      <div class="sensor">🌡️ Nhiệt độ (DHT11): <span id="v4">--</span> °C</div>
+      <div class="sensor">💧 Độ ẩm không khí: <span id="v5">--</span> %</div>
+      <div class="sensor">🌱 Độ ẩm đất: <span id="v6">--</span> %</div>
+      <div class="sensor">🌞 Ánh sáng: <span id="v3">--</span></div>
+      <div class="sensor">⚡ Điện áp: <span id="v1">--</span> V</div>
+      <div class="sensor">🔌 Dòng điện: <span id="v2">--</span> A</div>
+      <div class="sensor">🧪 pH: <span id="v8">--</span></div>
+      <div class="sensor">⚙️ EC: <span id="v7">--</span></div>
     </div>
 
     <div class="section">
       <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
-      <button class="btn" onclick="sendCmd('NODE 2 - Relay 1', 'ON', 1)">💡 Bóng đèn 1</button>
-      <button class="btn" onclick="sendCmd('NODE 2 - Relay 2', 'ON', 1)">💡 Bóng đèn 2</button>
-      <button class="btn" onclick="sendCmd('NODE 2 - Relay 3', 'ON', 1)">💡 Bóng đèn 3</button>
+      <button class="btn" id="light1">💡 Bóng đèn 1</button>
+      <button class="btn" id="light2">💡 Bóng đèn 2</button>
+      <button class="btn" id="light3">💡 Bóng đèn 3</button>
     </div>
 
     <div class="section">
       <h3>Node Cảm Biến 2 (Cuối luống)</h3>
-      <div class="sensor">🌡️ Nhiệt độ (SHT20): <span data-era-key="V12">--</span> °C</div>
-      <div class="sensor">💧 Độ ẩm không khí: <span data-era-key="V13">--</span> %</div>
-      <div class="sensor">🌱 Độ ẩm đất: <span data-era-key="V14">--</span> %</div>
-      <div class="sensor">🌞 Ánh sáng: <span data-era-key="V11">--</span></div>
-      <div class="sensor">⚡ Điện áp: <span data-era-key="V9">--</span> V</div>
-      <div class="sensor">🔌 Dòng điện: <span data-era-key="V10">--</span> A</div>
+      <div class="sensor">🌡️ Nhiệt độ (SHT20): <span id="v12">--</span> °C</div>
+      <div class="sensor">💧 Độ ẩm không khí: <span id="v13">--</span> %</div>
+      <div class="sensor">🌱 Độ ẩm đất: <span id="v14">--</span> %</div>
+      <div class="sensor">🌞 Ánh sáng: <span id="v11">--</span></div>
+      <div class="sensor">⚡ Điện áp: <span id="v9">--</span> V</div>
+      <div class="sensor">🔌 Dòng điện: <span id="v10">--</span> A</div>
     </div>
   </div>
 
+  <script src="https://www.unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
   <script>
-    function sendCmd(device, action, value) {
-      window.parent.postMessage({
-        type: 'action',
-        payload: {
-          device,
-          action,
-          value
+    const widget = new EraWidget();
+    const sensorMap = {
+      V1: 'v1', V2: 'v2', V3: 'v3', V4: 'v4', V5: 'v5', V6: 'v6', V7: 'v7', V8: 'v8',
+      V9: 'v9', V10: 'v10', V11: 'v11', V12: 'v12', V13: 'v13', V14: 'v14'
+    };
+
+    let actions = [];
+
+    widget.init({
+      needRealtimeConfigs: true,
+      needActions: true,
+      maxRealtimeConfigsCount: 20,
+      maxActionsCount: 10,
+      onConfiguration: (config) => {
+        window.realtimeConfigs = config.realtime_configs;
+        actions = config.actions;
+      },
+      onValues: (values) => {
+        for (const id in values) {
+          const el = document.getElementById(sensorMap[id]);
+          if (el) el.textContent = values[id].value;
         }
-      }, '*');
+      },
+    });
+
+    function bindAction(buttonId, actionIndex) {
+      const el = document.getElementById(buttonId);
+      el?.addEventListener('click', () => {
+        if (actions[actionIndex]) widget.triggerAction(actions[actionIndex].action, null);
+      });
     }
 
-    window.addEventListener("message", (event) => {
-      const { type, payload } = event.data;
-      if (type === "data") {
-        for (let key in payload) {
-          const el = document.querySelector(`[data-era-key='${key}']`);
-          if (el) el.textContent = payload[key];
-        }
-      }
-    });
+    bindAction('pump1', 0);
+    bindAction('pump2', 1);
+    bindAction('pump3', 2);
+    bindAction('pump4', 3);
+    bindAction('light1', 4);
+    bindAction('light2', 5);
+    bindAction('light3', 6);
   </script>
 </body>
 </html>
