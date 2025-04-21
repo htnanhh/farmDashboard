@@ -109,6 +109,7 @@
         actions = config.actions;
       },
       onValues: (values) => {
+        console.log("💡 DỮ LIỆU NHẬN TỪ ERA:", values);
         for (const id in values) {
           const el = document.getElementById(sensorMap[id]);
           if (el) el.textContent = values[id].value;
