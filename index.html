@@ -3,145 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard IFrame ERA</title>
+  <title>Sơ đồ ruộng cây thông minh</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f5fdf6;
+      background: #f0f8f4;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+    }
+    h2 {
+      font-size: 20px;
+      color: #2e7d32;
+      margin-bottom: 1rem;
     }
     .section {
-      background: #e9fbe8;
-      border: 2px dashed #43a047;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      background: #ffffff;
+      padding: 1rem;
       border-radius: 12px;
-      padding: 1rem 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
     }
-    .section h3 {
-      margin-top: 0;
-      color: #2e7d32;
+    .card {
+      border: 2px dashed #81c784;
+      border-radius: 10px;
+      padding: 1rem;
     }
-    .sensor {
-      padding: 0.4rem 0;
-      font-size: 15px;
+    .card h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #1b5e20;
     }
-    .sensor span {
-      font-weight: bold;
+    .item {
+      font-size: 14px;
+      background: #f1f8e9;
+      padding: 0.5rem;
+      border-radius: 6px;
+      margin: 0.25rem 0;
     }
-    .btn {
-      background: #4caf50;
+    .button {
+      background: #43a047;
       color: white;
       border: none;
-      border-radius: 6px;
-      padding: 0.6rem 1.2rem;
-      margin: 0.3rem 0;
-      width: 100%;
-      font-size: 15px;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      margin: 0.25rem 0;
       cursor: pointer;
-    }
-    .btn:hover {
-      background: #388e3c;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="grid">
+  <div class="container">
+    <h2>🌾 Sơ đồ theo dõi cảm biến và điều khiển</h2>
+
     <div class="section">
-      <h3>Node Điều Khiển 1 (Bơm)</h3>
-      <button class="btn" id="NODE 1 - Relay 1">🧯 Bơm nước</button>
-      <button class="btn" id="NODE 1 - Relay 2">🧪 Dung dịch A</button>
-      <button class="btn" id="NODE 1 - Relay 3">🧪 Dung dịch B</button>
-      <button class="btn" id="NODE 1 - Relay 4">🧪 Bơm HNO3</button>
+      <div class="card">
+        <h3>Node Điều Khiển 1 (Bơm)</h3>
+        <button class="button" id="NODE 1 - Relay 1">🚿 Bơm nước</button>
+        <button class="button" id="NODE 1 - Relay 2">🧴 Dung dịch A</button>
+        <button class="button" id="NODE 1 - Relay 3">🧴 Dung dịch B</button>
+        <button class="button" id="NODE 1 - Relay 4">🧪 Bơm HNO3</button>
+      </div>
+
+      <div class="card">
+        <h3>Node Cảm Biến 1 (Đầu luống)</h3>
+        <div class="item">🌡️ Nhiệt độ (DHT11): <span id="NODE 1 - Nhiệt độ">--</span> °C</div>
+        <div class="item">💧 Độ ẩm không khí: <span id="NODE 1 - Độ ẩm">--</span> %</div>
+        <div class="item">🌱 Độ ẩm đất: <span id="NODE 1 - Độ ẩm đất">--</span> %</div>
+        <div class="item">🌞 Ánh sáng: <span id="NODE 1 - Ánh sáng">--</span></div>
+        <div class="item">⚡ Điện áp: <span id="NODE 1 - Điện áp">--</span> V</div>
+        <div class="item">🔌 Dòng điện: <span id="NODE 1 - Dòng điện">--</span> A</div>
+        <div class="item">🧪 pH: <span id="NODE 1 - pH">--</span></div>
+        <div class="item">⚙️ EC: <span id="NODE 1 - EC">--</span></div>
+      </div>
     </div>
 
     <div class="section">
-      <h3>Node Cảm Biến 1 (Đầu luống)</h3>
-      <div class="sensor">🌡️ Nhiệt độ (DHT11): <span id="v4">--</span> °C</div>
-      <div class="sensor">💧 Độ ẩm không khí: <span id="v5">--</span> %</div>
-      <div class="sensor">🌱 Độ ẩm đất: <span id="v6">--</span> %</div>
-      <div class="sensor">🌞 Ánh sáng: <span id="v3">--</span></div>
-      <div class="sensor">⚡ Điện áp: <span id="v1">--</span> V</div>
-      <div class="sensor">🔌 Dòng điện: <span id="v2">--</span> A</div>
-      <div class="sensor">🧪 pH: <span id="v8">--</span></div>
-      <div class="sensor">⚙️ EC: <span id="v7">--</span></div>
-    </div>
+      <div class="card">
+        <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
+        <button class="button" id="NODE 2 - Relay 1">💡 Bóng đèn 1</button>
+        <button class="button" id="NODE 2 - Relay 2">💡 Bóng đèn 2</button>
+        <button class="button" id="NODE 2 - Relay 3">💡 Bóng đèn 3</button>
+      </div>
 
-    <div class="section">
-      <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
-      <button class="btn" id="NODE 2 - Relay 1">💡 Bóng đèn 1</button>
-      <button class="btn" id="NODE 2 - Relay 2">💡 Bóng đèn 2</button>
-      <button class="btn" id="NODE 2 - Relay 3">💡 Bóng đèn 3</button>
-    </div>
-
-    <div class="section">
-      <h3>Node Cảm Biến 2 (Cuối luống)</h3>
-      <div class="sensor">🌡️ Nhiệt độ (SHT20): <span id="v12">--</span> °C</div>
-      <div class="sensor">💧 Độ ẩm không khí: <span id="v13">--</span> %</div>
-      <div class="sensor">🌱 Độ ẩm đất: <span id="v14">--</span> %</div>
-      <div class="sensor">🌞 Ánh sáng: <span id="v11">--</span></div>
-      <div class="sensor">⚡ Điện áp: <span id="v9">--</span> V</div>
-      <div class="sensor">🔌 Dòng điện: <span id="v10">--</span> A</div>
+      <div class="card">
+        <h3>Node Cảm Biến 2 (Cuối luống)</h3>
+        <div class="item">🌡️ Nhiệt độ (SHT20): <span id="NODE 2 - Nhiệt độ">--</span> °C</div>
+        <div class="item">💧 Độ ẩm không khí: <span id="NODE 2 - Độ ẩm">--</span> %</div>
+        <div class="item">🌱 Độ ẩm đất: <span id="NODE 2 - Độ ẩm đất">--</span> %</div>
+        <div class="item">🌞 Ánh sáng: <span id="NODE 2 - Ánh sáng">--</span></div>
+        <div class="item">⚡ Điện áp: <span id="NODE 2 - Điện áp">--</span> V</div>
+        <div class="item">🔌 Dòng điện: <span id="NODE 2 - Dòng điện">--</span> A</div>
+      </div>
     </div>
   </div>
 
-  <script src="https://www.unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
+  <script src="https://unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
   <script>
-    const widget = new EraWidget();
-    const sensorMap = {
-      V1: 'v1', V2: 'v2', V3: 'v3', V4: 'v4', V5: 'v5', V6: 'v6', V7: 'v7', V8: 'v8',
-      V9: 'v9', V10: 'v10', V11: 'v11', V12: 'v12', V13: 'v13', V14: 'v14'
-    };
+    const actionMap = {};
+    const stateMap = {};
+    const eraWidget = new EraWidget();
 
-    const deviceState = {}; // Lưu trạng thái ON/OFF theo thiết bị
-    const actionMap = {};   // Map thiết bị → { on, off }
-    const configIdToDevice = {}; // Map config_id → device
-
-    widget.init({
+    eraWidget.init({
       needRealtimeConfigs: true,
       needActions: true,
-      maxRealtimeConfigsCount: 20,
-      maxActionsCount: 20,
       onConfiguration: (config) => {
-        config.actions.forEach((a) => {
-          const dev = a.device;
-          const type = a.value === 1 ? 'on' : 'off';
-          if (!actionMap[dev]) actionMap[dev] = {};
-          actionMap[dev][type] = a;
-          configIdToDevice[a.config_id] = dev;
+        config.realtime_configs.forEach(cfg => {
+          stateMap[cfg.id] = cfg;
         });
-        console.log("⚙️ Actions nhận được:", config.actions);
+        config.actions.forEach(action => {
+          const id = action.device;
+          actionMap[id] = actionMap[id] || {};
+          actionMap[id][action.value === 1 ? 'on' : 'off'] = action;
+        });
       },
       onValues: (values) => {
         for (const id in values) {
-          const el = document.getElementById(sensorMap[id]);
-          if (el) el.textContent = values[id].value;
-
-          const dev = configIdToDevice[id];
-          if (dev) {
-            deviceState[dev] = values[id].value;
+          const val = values[id].value;
+          const name = stateMap[id]?.name;
+          if (name) {
+            const el = document.getElementById(name);
+            if (el) el.innerText = val;
           }
         }
-      },
+      }
     });
 
-    function bindToggleButton(deviceName) {
-      const btn = document.getElementById(deviceName);
-      btn?.addEventListener('click', () => {
-        const state = deviceState[deviceName];
-        const nextAction = state == 1 ? actionMap[deviceName].off : actionMap[deviceName].on;
-        if (nextAction) widget.triggerAction(nextAction.action, null);
+    document.querySelectorAll(".button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.id;
+        const current = btn.getAttribute("data-state") === "on";
+        const next = !current;
+        const action = actionMap[id]?.[next ? "on" : "off"];
+        if (action) {
+          eraWidget.triggerAction(action.action);
+          btn.setAttribute("data-state", next ? "on" : "off");
+        }
       });
-    }
-
-    [
-      'NODE 1 - Relay 1', 'NODE 1 - Relay 2', 'NODE 1 - Relay 3', 'NODE 1 - Relay 4',
-      'NODE 2 - Relay 1', 'NODE 2 - Relay 2', 'NODE 2 - Relay 3'
-    ].forEach(bindToggleButton);
+    });
   </script>
 </body>
 </html>
