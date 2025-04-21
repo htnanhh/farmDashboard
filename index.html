@@ -3,143 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard IFrame ERA</title>
+  <title>Dashboard Luống 1 - ERA</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f5fdf6;
+      background: #f0f8f4;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
     }
-    .section {
-      background: #e9fbe8;
-      border: 2px dashed #43a047;
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
-    .section h3 {
+    .block {
+      flex: 1 1 45%;
+      background: #e8f5e9;
+      border: 2px dashed #66bb6a;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    h3 {
       margin-top: 0;
-      color: #2e7d32;
+      color: #1b5e20;
     }
-    .sensor {
-      padding: 0.4rem 0;
-      font-size: 15px;
-    }
-    .sensor span {
-      font-weight: bold;
-    }
-    .btn {
-      background: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 0.6rem 1.2rem;
-      margin: 0.3rem 0;
+    .button {
+      display: block;
       width: 100%;
-      font-size: 15px;
+      margin: 0.25rem 0;
+      padding: 0.5rem;
+      border: none;
+      background: #43a047;
+      color: white;
+      font-size: 14px;
+      border-radius: 6px;
       cursor: pointer;
     }
-    .btn:hover {
-      background: #388e3c;
+    .sensor {
+      background: #f1f8e9;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      margin: 0.25rem 0;
     }
   </style>
 </head>
 <body>
-  <div class="grid">
-    <div class="section">
-      <h3>Node Điều Khiển 1 (Bơm)</h3>
-      <button class="btn" id="pump1">🧯 Bơm nước</button>
-      <button class="btn" id="pump2">🧪 Dung dịch A</button>
-      <button class="btn" id="pump3">🧪 Dung dịch B</button>
-      <button class="btn" id="pump4">🧪 Bơm HNO3</button>
-    </div>
+  <div class="container">
+    <h2>📡 Dashboard Luống 1 - Kết nối ERA</h2>
+    <div class="row">
+      <div class="block">
+        <h3>Node Điều Khiển 1 (Bơm)</h3>
+        <button class="button" id="relay-1">🚿 Bơm nước</button>
+        <button class="button" id="relay-2">🧴 Dung dịch A</button>
+        <button class="button" id="relay-3">🧴 Dung dịch B</button>
+        <button class="button" id="relay-4">🧪 Bơm HNO3</button>
+      </div>
 
-    <div class="section">
-      <h3>Node Cảm Biến 1 (Đầu luống)</h3>
-      <div class="sensor">🌡️ Nhiệt độ (DHT11): <span id="v4">--</span> °C</div>
-      <div class="sensor">💧 Độ ẩm không khí: <span id="v5">--</span> %</div>
-      <div class="sensor">🌱 Độ ẩm đất: <span id="v6">--</span> %</div>
-      <div class="sensor">🌞 Ánh sáng: <span id="v3">--</span></div>
-      <div class="sensor">⚡ Điện áp: <span id="v1">--</span> V</div>
-      <div class="sensor">🔌 Dòng điện: <span id="v2">--</span> A</div>
-      <div class="sensor">🧪 pH: <span id="v8">--</span></div>
-      <div class="sensor">⚙️ EC: <span id="v7">--</span></div>
-    </div>
+      <div class="block">
+        <h3>Node Cảm Biến 1 (Đầu luống)</h3>
+        <div class="sensor">🌡️ Nhiệt độ (DHT11): <span id="cb1-temp">--</span> °C</div>
+        <div class="sensor">💧 Độ ẩm không khí: <span id="cb1-humi">--</span> %</div>
+        <div class="sensor">🌱 Độ ẩm đất: <span id="cb1-soil">--</span> %</div>
+        <div class="sensor">☀️ Ánh sáng: <span id="cb1-light">--</span></div>
+        <div class="sensor">⚡ Điện áp: <span id="cb1-v">--</span> V</div>
+        <div class="sensor">🔌 Dòng điện: <span id="cb1-a">--</span> A</div>
+        <div class="sensor">🧪 pH: <span id="cb1-ph">--</span></div>
+        <div class="sensor">⚙️ EC: <span id="cb1-ec">--</span></div>
+      </div>
 
-    <div class="section">
-      <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
-      <button class="btn" id="light1">💡 Bóng đèn 1</button>
-      <button class="btn" id="light2">💡 Bóng đèn 2</button>
-      <button class="btn" id="light3">💡 Bóng đèn 3</button>
-    </div>
+      <div class="block">
+        <h3>Node Điều Khiển 2 (Chiếu sáng)</h3>
+        <button class="button" id="relay-5">💡 Bóng đèn 1</button>
+        <button class="button" id="relay-6">💡 Bóng đèn 2</button>
+        <button class="button" id="relay-7">💡 Bóng đèn 3</button>
+      </div>
 
-    <div class="section">
-      <h3>Node Cảm Biến 2 (Cuối luống)</h3>
-      <div class="sensor">🌡️ Nhiệt độ (SHT20): <span id="v12">--</span> °C</div>
-      <div class="sensor">💧 Độ ẩm không khí: <span id="v13">--</span> %</div>
-      <div class="sensor">🌱 Độ ẩm đất: <span id="v14">--</span> %</div>
-      <div class="sensor">🌞 Ánh sáng: <span id="v11">--</span></div>
-      <div class="sensor">⚡ Điện áp: <span id="v9">--</span> V</div>
-      <div class="sensor">🔌 Dòng điện: <span id="v10">--</span> A</div>
+      <div class="block">
+        <h3>Node Cảm Biến 2 (Cuối luống)</h3>
+        <div class="sensor">🌡️ Nhiệt độ (SHT20): <span id="cb2-temp">--</span> °C</div>
+        <div class="sensor">💧 Độ ẩm không khí: <span id="cb2-humi">--</span> %</div>
+        <div class="sensor">🌱 Độ ẩm đất: <span id="cb2-soil">--</span> %</div>
+        <div class="sensor">☀️ Ánh sáng: <span id="cb2-light">--</span></div>
+        <div class="sensor">⚡ Điện áp: <span id="cb2-v">--</span> V</div>
+        <div class="sensor">🔌 Dòng điện: <span id="cb2-a">--</span> A</div>
+      </div>
     </div>
   </div>
 
-  <script src="https://www.unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
+  <!-- ERA Widget script -->
+  <script src="https://cdn.jsdelivr.net/npm/@eohjsc/era-widget@1.1.3/dist/era-widget.umd.min.js"></script>
   <script>
-    const widget = new EraWidget();
-    const sensorMap = {
-      V1: 'v1', V2: 'v2', V3: 'v3', V4: 'v4', V5: 'v5', V6: 'v6', V7: 'v7', V8: 'v8',
-      V9: 'v9', V10: 'v10', V11: 'v11', V12: 'v12', V13: 'v13', V14: 'v14'
-    };
+    const buttons = [
+      "relay-1", "relay-2", "relay-3", "relay-4", "relay-5", "relay-6", "relay-7"
+    ];
 
-    let actions = [];
-    let status = {}; // Lưu trạng thái hiện tại của các thiết bị relay
+    const eraWidget = new EraWidget();
+    let actionMap = {};
 
-    widget.init({
+    eraWidget.init({
       needRealtimeConfigs: true,
       needActions: true,
-      maxRealtimeConfigsCount: 20,
-      maxActionsCount: 20,
+
       onConfiguration: (config) => {
-        window.realtimeConfigs = config.realtime_configs;
-        actions = config.actions;
-      },
-      onValues: (values) => {
-        for (const id in values) {
-          const el = document.getElementById(sensorMap[id]);
-          if (el) el.textContent = values[id].value;
-        }
-        // Lưu trạng thái thiết bị điều khiển (giả sử theo thứ tự relay tương ứng actions)
-        actions.forEach((act, i) => {
-          if (act.device && typeof values[act.device]?.value !== 'undefined') {
-            status[act.device] = values[act.device].value;
-          }
+        console.log("📥 Cấu hình ERA gửi vào:", config);
+        config.actions.forEach(act => {
+          actionMap[act.device + '-' + act.value] = act.action;
         });
       },
+
+      onValues: (values) => {
+        console.log("📈 Giá trị nhận:", values);
+        // Cập nhật cảm biến nếu cần
+      }
     });
 
-    function toggleAction(device, actionOn, actionOff, buttonId) {
-      const btn = document.getElementById(buttonId);
-      btn?.addEventListener('click', () => {
-        const isOn = status[device] == 1;
-        const actionToSend = isOn ? actionOff : actionOn;
-        widget.triggerAction(actionToSend.action, null);
+    buttons.forEach((btnId, i) => {
+      const el = document.getElementById(btnId);
+      let state = false;
+      el.addEventListener("click", () => {
+        const device = `NODE 1 - Relay ${i + 1}`;
+        const act = state ? actionMap[device + '-0'] : actionMap[device + '-1'];
+        if (act) {
+          eraWidget.triggerAction(act, null);
+          state = !state;
+          el.style.background = state ? '#2e7d32' : '#43a047';
+        }
       });
-    }
-
-    toggleAction('NODE 1 - Relay 1', actions[0], actions[1], 'pump1');
-    toggleAction('NODE 1 - Relay 2', actions[2], actions[3], 'pump2');
-    toggleAction('NODE 1 - Relay 3', actions[4], actions[5], 'pump3');
-    toggleAction('NODE 1 - Relay 4', actions[6], actions[7], 'pump4');
-    toggleAction('NODE 2 - Relay 1', actions[8], actions[9], 'light1');
-    toggleAction('NODE 2 - Relay 2', actions[10], actions[11], 'light2');
-    toggleAction('NODE 2 - Relay 3', actions[12], actions[13], 'light3');
+    });
   </script>
 </body>
 </html>
-//on
