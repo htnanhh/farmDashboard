@@ -114,6 +114,7 @@
           actionMap[dev][type] = a;
           configIdToDevice[a.config_id] = dev;
         });
+        console.log("⚙️ Actions nhận được:", config.actions);
       },
       onValues: (values) => {
         for (const id in values) {
