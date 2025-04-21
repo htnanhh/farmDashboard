@@ -53,10 +53,10 @@
   <div class="grid">
     <div class="section">
       <h3>Node Điều Khiển 1 (Bơm)</h3>
-      <button class="btn" id="pump1">🧯 Bơm nước</button>
-      <button class="btn" id="pump2">🧪 Dung dịch A</button>
-      <button class="btn" id="pump3">🧪 Dung dịch B</button>
-      <button class="btn" id="pump4">🧪 Bơm HNO3</button>
+      <button class="btn" id="NODE 1 - Relay 1">🧯 Bơm nước</button>
+      <button class="btn" id="NODE 1 - Relay 2">🧪 Dung dịch A</button>
+      <button class="btn" id="NODE 1 - Relay 3">🧪 Dung dịch B</button>
+      <button class="btn" id="NODE 1 - Relay 4">🧪 Bơm HNO3</button>
     </div>
 
     <div class="section">
@@ -73,9 +73,9 @@
 
     <div class="section">
       <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
-      <button class="btn" id="light1">💡 Bóng đèn 1</button>
-      <button class="btn" id="light2">💡 Bóng đèn 2</button>
-      <button class="btn" id="light3">💡 Bóng đèn 3</button>
+      <button class="btn" id="NODE 2 - Relay 1">💡 Bóng đèn 1</button>
+      <button class="btn" id="NODE 2 - Relay 2">💡 Bóng đèn 2</button>
+      <button class="btn" id="NODE 2 - Relay 3">💡 Bóng đèn 3</button>
     </div>
 
     <div class="section">
@@ -97,9 +97,9 @@
       V9: 'v9', V10: 'v10', V11: 'v11', V12: 'v12', V13: 'v13', V14: 'v14'
     };
 
-    const deviceState = {}; // Lưu trạng thái ON/OFF theo config_id
-    const actionMap = {}; // Map theo config_id -> { on, off }
-    const configIdToDevice = {}; // Map config_id -> thiết bị relay
+    const deviceState = {}; // Lưu trạng thái ON/OFF theo thiết bị
+    const actionMap = {};   // Map thiết bị → { on, off }
+    const configIdToDevice = {}; // Map config_id → device
 
     widget.init({
       needRealtimeConfigs: true,
@@ -108,47 +108,39 @@
       maxActionsCount: 20,
       onConfiguration: (config) => {
         config.actions.forEach((a) => {
-          const id = a.config_id;
           const dev = a.device;
           const type = a.value === 1 ? 'on' : 'off';
-          if (!actionMap[id]) actionMap[id] = {};
-          actionMap[id][type] = a;
-          configIdToDevice[id] = dev;
+          if (!actionMap[dev]) actionMap[dev] = {};
+          actionMap[dev][type] = a;
+          configIdToDevice[a.config_id] = dev;
         });
       },
       onValues: (values) => {
-        console.log("💡 DỮ LIỆU NHẬN TỪ ERA:", values);
         for (const id in values) {
           const el = document.getElementById(sensorMap[id]);
           if (el) el.textContent = values[id].value;
 
-          // Nếu id là relay, cập nhật trạng thái thiết bị
-          if (configIdToDevice[id]) {
-            const dev = configIdToDevice[id];
+          const dev = configIdToDevice[id];
+          if (dev) {
             deviceState[dev] = values[id].value;
           }
         }
       },
     });
 
-    function bindToggleButton(btnId, configId) {
-      const dev = configIdToDevice[configId];
-      const btn = document.getElementById(btnId);
+    function bindToggleButton(deviceName) {
+      const btn = document.getElementById(deviceName);
       btn?.addEventListener('click', () => {
-        const state = deviceState[dev];
-        const nextAction = state == 1 ? actionMap[configId].off : actionMap[configId].on;
+        const state = deviceState[deviceName];
+        const nextAction = state == 1 ? actionMap[deviceName].off : actionMap[deviceName].on;
         if (nextAction) widget.triggerAction(nextAction.action, null);
       });
     }
 
-    // Gán nút với config_id tương ứng (dựa vào cấu hình widget)
-    bindToggleButton('pump1', 'V100');
-    bindToggleButton('pump2', 'V101');
-    bindToggleButton('pump3', 'V102');
-    bindToggleButton('pump4', 'V103');
-    bindToggleButton('light1', 'V104');
-    bindToggleButton('light2', 'V105');
-    bindToggleButton('light3', 'V106');
+    [
+      'NODE 1 - Relay 1', 'NODE 1 - Relay 2', 'NODE 1 - Relay 3', 'NODE 1 - Relay 4',
+      'NODE 2 - Relay 1', 'NODE 2 - Relay 2', 'NODE 2 - Relay 3'
+    ].forEach(bindToggleButton);
   </script>
 </body>
 </html>
