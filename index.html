@@ -97,40 +97,58 @@
       V9: 'v9', V10: 'v10', V11: 'v11', V12: 'v12', V13: 'v13', V14: 'v14'
     };
 
-    let actions = [];
+    const deviceState = {}; // Lưu trạng thái ON/OFF theo config_id
+    const actionMap = {}; // Map theo config_id -> { on, off }
+    const configIdToDevice = {}; // Map config_id -> thiết bị relay
 
     widget.init({
       needRealtimeConfigs: true,
       needActions: true,
       maxRealtimeConfigsCount: 20,
-      maxActionsCount: 10,
+      maxActionsCount: 20,
       onConfiguration: (config) => {
-        window.realtimeConfigs = config.realtime_configs;
-        actions = config.actions;
+        config.actions.forEach((a) => {
+          const id = a.config_id;
+          const dev = a.device;
+          const type = a.value === 1 ? 'on' : 'off';
+          if (!actionMap[id]) actionMap[id] = {};
+          actionMap[id][type] = a;
+          configIdToDevice[id] = dev;
+        });
       },
       onValues: (values) => {
         console.log("💡 DỮ LIỆU NHẬN TỪ ERA:", values);
         for (const id in values) {
           const el = document.getElementById(sensorMap[id]);
           if (el) el.textContent = values[id].value;
+
+          // Nếu id là relay, cập nhật trạng thái thiết bị
+          if (configIdToDevice[id]) {
+            const dev = configIdToDevice[id];
+            deviceState[dev] = values[id].value;
+          }
         }
       },
     });
 
-    function bindAction(buttonId, actionIndex) {
-      const el = document.getElementById(buttonId);
-      el?.addEventListener('click', () => {
-        if (actions[actionIndex]) widget.triggerAction(actions[actionIndex].action, null);
+    function bindToggleButton(btnId, configId) {
+      const dev = configIdToDevice[configId];
+      const btn = document.getElementById(btnId);
+      btn?.addEventListener('click', () => {
+        const state = deviceState[dev];
+        const nextAction = state == 1 ? actionMap[configId].off : actionMap[configId].on;
+        if (nextAction) widget.triggerAction(nextAction.action, null);
       });
     }
 
-    bindAction('pump1', 0);
-    bindAction('pump2', 1);
-    bindAction('pump3', 2);
-    bindAction('pump4', 3);
-    bindAction('light1', 4);
-    bindAction('light2', 5);
-    bindAction('light3', 6);
+    // Gán nút với config_id tương ứng (dựa vào cấu hình widget)
+    bindToggleButton('pump1', 'V100');
+    bindToggleButton('pump2', 'V101');
+    bindToggleButton('pump3', 'V102');
+    bindToggleButton('pump4', 'V103');
+    bindToggleButton('light1', 'V104');
+    bindToggleButton('light2', 'V105');
+    bindToggleButton('light3', 'V106');
   </script>
 </body>
 </html>
