@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sơ đồ ruộng cây thông minh</title>
+  <title>Dashboard Luống 1 - ERA</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -16,136 +16,122 @@
       margin: auto;
       padding: 1rem;
     }
-    h2 {
-      font-size: 20px;
-      color: #2e7d32;
-      margin-bottom: 1rem;
-    }
-    .section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .row {
+      display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
-      background: #ffffff;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: 1.5rem;
     }
-    .card {
-      border: 2px dashed #81c784;
+    .block {
+      flex: 1 1 45%;
+      background: #e8f5e9;
+      border: 2px dashed #66bb6a;
       border-radius: 10px;
       padding: 1rem;
     }
-    .card h3 {
-      margin: 0;
-      font-size: 16px;
+    h3 {
+      margin-top: 0;
       color: #1b5e20;
     }
-    .item {
-      font-size: 14px;
-      background: #f1f8e9;
-      padding: 0.5rem;
-      border-radius: 6px;
-      margin: 0.25rem 0;
-    }
     .button {
+      display: block;
+      width: 100%;
+      margin: 0.25rem 0;
+      padding: 0.5rem;
+      border: none;
       background: #43a047;
       color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      margin: 0.25rem 0;
-      cursor: pointer;
       font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .sensor {
+      background: #f1f8e9;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      margin: 0.25rem 0;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>🌾 Sơ đồ theo dõi cảm biến và điều khiển</h2>
-
-    <div class="section">
-      <div class="card">
+    <h2>📡 Dashboard Luống 1 - Kết nối ERA</h2>
+    <div class="row">
+      <div class="block">
         <h3>Node Điều Khiển 1 (Bơm)</h3>
-        <button class="button" id="NODE 1 - Relay 1">🚿 Bơm nước</button>
-        <button class="button" id="NODE 1 - Relay 2">🧴 Dung dịch A</button>
-        <button class="button" id="NODE 1 - Relay 3">🧴 Dung dịch B</button>
-        <button class="button" id="NODE 1 - Relay 4">🧪 Bơm HNO3</button>
+        <button class="button" id="relay-1">🚿 Bơm nước</button>
+        <button class="button" id="relay-2">🧴 Dung dịch A</button>
+        <button class="button" id="relay-3">🧴 Dung dịch B</button>
+        <button class="button" id="relay-4">🧪 Bơm HNO3</button>
       </div>
 
-      <div class="card">
+      <div class="block">
         <h3>Node Cảm Biến 1 (Đầu luống)</h3>
-        <div class="item">🌡️ Nhiệt độ (DHT11): <span id="NODE 1 - Nhiệt độ">--</span> °C</div>
-        <div class="item">💧 Độ ẩm không khí: <span id="NODE 1 - Độ ẩm">--</span> %</div>
-        <div class="item">🌱 Độ ẩm đất: <span id="NODE 1 - Độ ẩm đất">--</span> %</div>
-        <div class="item">🌞 Ánh sáng: <span id="NODE 1 - Ánh sáng">--</span></div>
-        <div class="item">⚡ Điện áp: <span id="NODE 1 - Điện áp">--</span> V</div>
-        <div class="item">🔌 Dòng điện: <span id="NODE 1 - Dòng điện">--</span> A</div>
-        <div class="item">🧪 pH: <span id="NODE 1 - pH">--</span></div>
-        <div class="item">⚙️ EC: <span id="NODE 1 - EC">--</span></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="card">
-        <h3>Node Điều Khiển 2 (Đèn chiếu sáng)</h3>
-        <button class="button" id="NODE 2 - Relay 1">💡 Bóng đèn 1</button>
-        <button class="button" id="NODE 2 - Relay 2">💡 Bóng đèn 2</button>
-        <button class="button" id="NODE 2 - Relay 3">💡 Bóng đèn 3</button>
+        <div class="sensor">🌡️ Nhiệt độ (DHT11): <span id="cb1-temp">--</span> °C</div>
+        <div class="sensor">💧 Độ ẩm không khí: <span id="cb1-humi">--</span> %</div>
+        <div class="sensor">🌱 Độ ẩm đất: <span id="cb1-soil">--</span> %</div>
+        <div class="sensor">☀️ Ánh sáng: <span id="cb1-light">--</span></div>
+        <div class="sensor">⚡ Điện áp: <span id="cb1-v">--</span> V</div>
+        <div class="sensor">🔌 Dòng điện: <span id="cb1-a">--</span> A</div>
+        <div class="sensor">🧪 pH: <span id="cb1-ph">--</span></div>
+        <div class="sensor">⚙️ EC: <span id="cb1-ec">--</span></div>
       </div>
 
-      <div class="card">
+      <div class="block">
+        <h3>Node Điều Khiển 2 (Chiếu sáng)</h3>
+        <button class="button" id="relay-5">💡 Bóng đèn 1</button>
+        <button class="button" id="relay-6">💡 Bóng đèn 2</button>
+        <button class="button" id="relay-7">💡 Bóng đèn 3</button>
+      </div>
+
+      <div class="block">
         <h3>Node Cảm Biến 2 (Cuối luống)</h3>
-        <div class="item">🌡️ Nhiệt độ (SHT20): <span id="NODE 2 - Nhiệt độ">--</span> °C</div>
-        <div class="item">💧 Độ ẩm không khí: <span id="NODE 2 - Độ ẩm">--</span> %</div>
-        <div class="item">🌱 Độ ẩm đất: <span id="NODE 2 - Độ ẩm đất">--</span> %</div>
-        <div class="item">🌞 Ánh sáng: <span id="NODE 2 - Ánh sáng">--</span></div>
-        <div class="item">⚡ Điện áp: <span id="NODE 2 - Điện áp">--</span> V</div>
-        <div class="item">🔌 Dòng điện: <span id="NODE 2 - Dòng điện">--</span> A</div>
+        <div class="sensor">🌡️ Nhiệt độ (SHT20): <span id="cb2-temp">--</span> °C</div>
+        <div class="sensor">💧 Độ ẩm không khí: <span id="cb2-humi">--</span> %</div>
+        <div class="sensor">🌱 Độ ẩm đất: <span id="cb2-soil">--</span> %</div>
+        <div class="sensor">☀️ Ánh sáng: <span id="cb2-light">--</span></div>
+        <div class="sensor">⚡ Điện áp: <span id="cb2-v">--</span> V</div>
+        <div class="sensor">🔌 Dòng điện: <span id="cb2-a">--</span> A</div>
       </div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
+  <!-- ERA Widget script -->
+  <script src="https://cdn.jsdelivr.net/npm/@eohjsc/era-widget@1.1.3/dist/era-widget.umd.min.js"></script>
   <script>
-    const actionMap = {};
-    const stateMap = {};
+    const buttons = [
+      "relay-1", "relay-2", "relay-3", "relay-4", "relay-5", "relay-6", "relay-7"
+    ];
+
     const eraWidget = new EraWidget();
+    let actionMap = {};
 
     eraWidget.init({
       needRealtimeConfigs: true,
       needActions: true,
+
       onConfiguration: (config) => {
-        config.realtime_configs.forEach(cfg => {
-          stateMap[cfg.id] = cfg;
-        });
-        config.actions.forEach(action => {
-          const id = action.device;
-          actionMap[id] = actionMap[id] || {};
-          actionMap[id][action.value === 1 ? 'on' : 'off'] = action;
+        console.log("📥 Cấu hình ERA gửi vào:", config);
+        config.actions.forEach(act => {
+          actionMap[act.device + '-' + act.value] = act.action;
         });
       },
+
       onValues: (values) => {
-        for (const id in values) {
-          const val = values[id].value;
-          const name = stateMap[id]?.name;
-          if (name) {
-            const el = document.getElementById(name);
-            if (el) el.innerText = val;
-          }
-        }
+        console.log("📈 Giá trị nhận:", values);
+        // Cập nhật cảm biến nếu cần
       }
     });
 
-    document.querySelectorAll(".button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.id;
-        const current = btn.getAttribute("data-state") === "on";
-        const next = !current;
-        const action = actionMap[id]?.[next ? "on" : "off"];
-        if (action) {
-          eraWidget.triggerAction(action.action);
-          btn.setAttribute("data-state", next ? "on" : "off");
+    buttons.forEach((btnId, i) => {
+      const el = document.getElementById(btnId);
+      let state = false;
+      el.addEventListener("click", () => {
+        const device = `NODE 1 - Relay ${i + 1}`;
+        const act = state ? actionMap[device + '-0'] : actionMap[device + '-1'];
+        if (act) {
+          eraWidget.triggerAction(act, null);
+          state = !state;
+          el.style.background = state ? '#2e7d32' : '#43a047';
         }
       });
     });
